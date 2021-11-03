@@ -15,6 +15,22 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('posts')" :active="request()->routeIs('posts')">
+                        Список записей
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('post-create')" :active="request()->routeIs('post-create')">
+                        Создать новую запись
+                    </x-nav-link>
+
+{{--                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">--}}
+{{--                        Список сотрудников--}}
+{{--                    </x-nav-link>--}}
+
+{{--                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">--}}
+{{--                        Создать нового сотрудника--}}
+{{--                    </x-nav-link>--}}
                 </div>
             </div>
 
