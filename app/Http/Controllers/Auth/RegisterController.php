@@ -16,6 +16,14 @@ use Illuminate\View\View;
 class RegisterController extends Controller
 {
     /**
+     * @constructor RegisterController
+     */
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
+
+    /**
      * Страница регистрации пользователя
      *
      * @return View

@@ -19,6 +19,15 @@ use Illuminate\View\View;
 class LoginController extends Controller
 {
     /**
+     * @constructor LoginController
+     */
+    public function __construct()
+    {
+        $this->middleware('guest')->except('destroy');
+        $this->middleware('auth')->only('destroy');
+    }
+
+    /**
      * Страница авторизации пользователя
      *
      * @return View

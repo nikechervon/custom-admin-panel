@@ -2,22 +2,22 @@
 
 namespace Database\Seeders;
 
-use App\Enums\Roles;
-use App\Models\Role;
+use App\Enums\Categories;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
-class RolesSeeder extends Seeder
+class CategoriesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      *
      * @return void
      */
-    public function run(): void
+    public function run()
     {
-        foreach (Roles::values() as $alias => $name) {
-            Role::factory()->create([
+        foreach (Categories::values() as $alias => $name) {
+            Category::factory()->create([
                 'name' => $name,
                 'alias' => Str::lower($alias),
             ]);
