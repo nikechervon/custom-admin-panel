@@ -12,6 +12,7 @@ use App\Http\Requests\Post\PostUpdateRequest;
 use App\Models\Post;
 use App\Repositories\Post\CategoriesRepository;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
@@ -43,11 +44,12 @@ class PostController extends Controller
     }
 
     /**
+     * @param Request $request
      * @return View
      */
-    public function list(): View
+    public function list(Request $request): View
     {
-        $posts = GetPostsAction::run(auth()->user());
+        $posts = GetPostsAction::run($request);
 
         return view('post.list')->with([
             'posts' => $posts,

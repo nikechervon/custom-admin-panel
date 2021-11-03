@@ -20,13 +20,16 @@
                         Список записей
                     </x-nav-link>
 
-                    <x-nav-link :href="route('post-create')" :active="request()->routeIs('post-create')">
-                        Создать новую запись
-                    </x-nav-link>
+                    @isManager()
+                        <x-nav-link :href="route('employee-create')" :active="request()->routeIs('enployee-create')">
+                            Создать нового сотрудника
+                        </x-nav-link>
+                    @else
+                        <x-nav-link :href="route('post-create')" :active="request()->routeIs('post-create')">
+                            Создать новую запись
+                        </x-nav-link>
+                    @endisManager
 
-                    <x-nav-link :href="route('employee-create')" :active="request()->routeIs('enployee-create')">
-                        Создать нового сотрудника
-                    </x-nav-link>
                 </div>
             </div>
 

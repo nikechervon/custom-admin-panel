@@ -27,6 +27,9 @@
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Category</th>
+                @isManager
+                <th scope="col">Author</th>
+                @endisManager
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -34,8 +37,11 @@
             @foreach($posts as $post)
                 <tr>
                     <th scope="row">{{ $post->id }}</th>
-                    <td><a href="/posts/{{ $post->id }}">{{ \Illuminate\Support\Str::limit($post->name) }}</a></td>
-                    <td>{{ $post->category->name }}</td>
+                    <td><a href="/posts/{{ $post->id }}">{{ \Illuminate\Support\Str::limit($post->name, 50) }}</a></td>
+                    <td><a href="?category={{ $post->category->alias }}">{{ $post->category->name }}</a></td>
+                    @isManager
+                    <td><a href="?author={{ $post->user->email }}">{{ $post->user->email }}</a></td>
+                    @endisManager
                     <td>
                         <a href="/posts/{{ $post->id }}/edit" style="color: blue">Редактировать</a>
                         <form action="/posts/{{ $post->id }}" method="POST" style="display: inline-block">
