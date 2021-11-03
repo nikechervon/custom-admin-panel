@@ -3,8 +3,8 @@
 namespace App\Actions\Posts;
 
 use App\Actions\AbstractAction;
-use App\Enums\Roles;
 use App\Models\User;
+use App\Repositories\Post\PostsRepository;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -14,22 +14,29 @@ use Illuminate\Pagination\LengthAwarePaginator;
  */
 class GetPostsAction extends AbstractAction
 {
+    public const PER_PAGE = 10;
+
     /**
      * @param Authenticatable|User $user
      * @return LengthAwarePaginator
      */
     public static function run(Authenticatable|User $user): LengthAwarePaginator
     {
-        return match ($user->role->name) {
-            Roles::EMPLOYEE => self::getByEmployee($user),
-//            Roles::MANAGER => '',
-        };
+        if ($user->isManager()) {
+            return self::getByManager($user);
+        }
+
+        return self::getByEmployee($user);
     }
 
-//    private static function getByManager(): LengthAwarePaginator
-//    {
-//
-//    }
+    /**
+     * @param User $user
+     * @return LengthAwarePaginator
+     */
+    private static function getByManager(User $user): LengthAwarePaginator
+    {
+        return app(PostsRepository::class)->getByManager($user, self::PER_PAGE);
+    }
 
     /**
      * @param User $user
@@ -37,6 +44,6 @@ class GetPostsAction extends AbstractAction
      */
     private static function getByEmployee(User $user): LengthAwarePaginator
     {
-        return $user->posts()->paginate(10);
+        return $user->posts()->paginate(self::PER_PAGE);
     }
 }

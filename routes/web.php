@@ -13,3 +13,6 @@ require __DIR__ . '/components/auth.php';
 
 /** Роуты для работы с записями */
 require __DIR__ . '/components/posts.php';
+
+/** Роуты для работы с сотрудниками */
+require __DIR__ . '/components/employees.php';

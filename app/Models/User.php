@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Roles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -24,6 +25,22 @@ class User extends Authenticatable
     protected $hidden = ['password', 'remember_token',];
 
     /**
+     * @return bool
+     */
+    public function isManager(): bool
+    {
+        return $this->role->name === Roles::MANAGER;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEmployee(): bool
+    {
+        return $this->role->name === Roles::EMPLOYEE;
+    }
+
+    /**
      * @return BelongsTo
      */
     public function role(): BelongsTo
@@ -37,5 +54,16 @@ class User extends Authenticatable
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function employees(): HasMany
+    {
+        return $this->hasMany(
+            ManagerEmployee::class,
+            'manager_id'
+        );
     }
 }

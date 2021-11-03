@@ -24,13 +24,9 @@
                         Создать новую запись
                     </x-nav-link>
 
-{{--                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">--}}
-{{--                        Список сотрудников--}}
-{{--                    </x-nav-link>--}}
-
-{{--                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">--}}
-{{--                        Создать нового сотрудника--}}
-{{--                    </x-nav-link>--}}
+                    <x-nav-link :href="route('employee-create')" :active="request()->routeIs('enployee-create')">
+                        Создать нового сотрудника
+                    </x-nav-link>
                 </div>
             </div>
 
