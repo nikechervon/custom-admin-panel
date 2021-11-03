@@ -43,7 +43,10 @@
                     <td><a href="?author={{ $post->user->email }}">{{ $post->user->email }}</a></td>
                     @endisManager
                     <td>
-                        <a href="/posts/{{ $post->id }}/edit" style="color: blue">Редактировать</a>
+                        @isEmployee
+                            <a href="/posts/{{ $post->id }}/edit" style="color: blue">Редактировать</a>
+                        @endisEmployee
+
                         <form action="/posts/{{ $post->id }}" method="POST" style="display: inline-block">
                             @csrf
                             @method('DELETE')

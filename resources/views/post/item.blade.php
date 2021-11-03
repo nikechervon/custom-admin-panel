@@ -29,13 +29,15 @@
         </div>
         <div style="display: flex; justify-content: center;">
             <h3 style="margin-right: 30px" class="h3">Категория:</h3>
-            <p style="color: red; font-weight: bold; font-size: 20px">{{ $post->category->name }}</p>
+            <p style="color: red; font-weight: bold; font-size: 20px"><a
+                    href="/posts?category={{ $post->category->alias }}">{{ $post->category->name }}</a></p>
         </div>
         @isManager
-            <div style="display: flex; justify-content: center;">
-                <h3 style="margin-right: 30px" class="h3">Автор:</h3>
-                <p style="color: red; font-weight: bold; font-size: 20px">{{ $post->user->email }}</p>
-            </div>
+        <div style="display: flex; justify-content: center;">
+            <h3 style="margin-right: 30px" class="h3">Автор:</h3>
+            <p style="color: red; font-weight: bold; font-size: 20px"><a
+                    href="/posts?author={{ $post->user->email }}">{{ $post->user->email }}</a></p>
+        </div>
         @endisManager
     </div>
 
