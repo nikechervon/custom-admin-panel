@@ -50,4 +50,6 @@
         </table>
     @endif
 
+    @include('layouts.pagination', ['paginator' => $posts])
+
 </x-app-layout>
