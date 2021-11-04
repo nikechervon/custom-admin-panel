@@ -1,18 +1,18 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+/** Главная страница */
+Route::get('/', [DashboardController::class, 'create'])
+    ->middleware(['auth'])
+    ->name('dashboard');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/** Роуты аутентификации */
+require __DIR__ . '/components/auth.php';
+
+/** Роуты для работы с записями */
+require __DIR__ . '/components/posts.php';
+
+/** Роуты для работы с сотрудниками */
+require __DIR__ . '/components/employees.php';
