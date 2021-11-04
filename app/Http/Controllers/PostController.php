@@ -11,6 +11,7 @@ use App\Http\Requests\Post\PostCreateRequest;
 use App\Http\Requests\Post\PostUpdateRequest;
 use App\Models\Post;
 use App\Repositories\Post\CategoriesRepository;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -35,9 +36,12 @@ class PostController extends Controller
      * Страница создания записи
      *
      * @return View
+     * @throws AuthorizationException
      */
     public function create(): View
     {
+        $this->authorize('create', Post::class);
+
         return view('post.create')->with([
             'categories' => $this->getCategories(),
         ]);
@@ -76,9 +80,12 @@ class PostController extends Controller
      *
      * @param Post $post
      * @return View
+     * @throws AuthorizationException
      */
     public function edit(Post $post): View
     {
+        $this->authorize('update', [Post::class, $post]);
+
         return view('post.update')->with([
             'post' => $post,
             'image' => $post->getFirstMediaUrl(MediaCollections::POSTS),
@@ -91,9 +98,12 @@ class PostController extends Controller
      *
      * @param Post $post
      * @return View
+     * @throws AuthorizationException
      */
     public function show(Post $post): View
     {
+        $this->authorize('view', [Post::class, $post]);
+
         return view('post.item')->with([
             'post' => $post,
             'image' => $post->getFirstMediaUrl(MediaCollections::POSTS),
@@ -121,9 +131,12 @@ class PostController extends Controller
      *
      * @param Post $post
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function delete(Post $post): RedirectResponse
     {
+        $this->authorize('delete', [Post::class, $post]);
+
         DeletePostAction::run($post);
         session()->flash('success', 'Запись успешно удалена!');
         return back();

@@ -24,6 +24,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->blade();
+    }
+
+    /**
+     * @return void
+     */
+    private function blade(): void
+    {
         Blade::if('isManager', function () {
             return auth()->user()->isManager();
         });

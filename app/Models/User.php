@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Roles;
+use App\Traits\CheckUserRolesTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -12,7 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, CheckUserRolesTrait;
 
     /**
      * @var array
@@ -23,22 +24,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = ['password', 'remember_token',];
-
-    /**
-     * @return bool
-     */
-    public function isManager(): bool
-    {
-        return $this->role->name === Roles::MANAGER;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isEmployee(): bool
-    {
-        return $this->role->name === Roles::EMPLOYEE;
-    }
 
     /**
      * @return BelongsTo

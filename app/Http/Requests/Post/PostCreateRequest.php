@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Post;
 
+use App\Models\Post;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class PostCreateRequest extends FormRequest
 {
@@ -11,7 +13,9 @@ class PostCreateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        // Делаю проверку в authorize(),
+        // что бы проверка прав была перед валидацией
+        return Gate::check('create', Post::class);
     }
 
     /**

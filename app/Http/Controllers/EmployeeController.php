@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Actions\CreateEmployeeAction;
 use App\Http\Requests\EmployeeCreateRequest;
+use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -25,9 +27,12 @@ class EmployeeController extends Controller
      * Страница создания сотрудника
      *
      * @return View
+     * @throws AuthorizationException
      */
     public function create(): View
     {
+        $this->authorize('create', User::class);
+
         return view('employee.create');
     }
 
