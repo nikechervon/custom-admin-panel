@@ -3,7 +3,6 @@
 namespace App\Actions\Posts;
 
 use App\Actions\AbstractAction;
-use App\Enums\MediaCollections;
 use App\Models\Post;
 
 /**
@@ -17,7 +16,6 @@ class DeletePostAction extends AbstractAction
      */
     public static function run(Post $post): void
     {
-        $post->getFirstMedia(MediaCollections::POSTS)->delete();
         $post->delete();
     }
 }

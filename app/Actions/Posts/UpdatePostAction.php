@@ -4,9 +4,9 @@ namespace App\Actions\Posts;
 
 use App\Actions\AbstractAction;
 use App\Enums\MediaCollections;
-use App\Helpers\MediaHelper;
 use App\Http\Requests\Post\PostUpdateRequest;
 use App\Models\Post;
+use App\Tasks\Posts\UpdatePostTask;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 
@@ -25,13 +25,13 @@ class UpdatePostAction extends AbstractAction
      */
     public static function run(PostUpdateRequest $request, Post $post): Post
     {
-        $post->update([
+        UpdatePostTask::run($post, [
             'name' => $request->name,
             'category_id' => $request->category_id,
         ]);
 
         if ($image = $request->file('image')) {
-            MediaHelper::new($post, $image, MediaCollections::POSTS);
+            $post->addMedia($image)->toMediaCollection(MediaCollections::POSTS);
         }
 
         return $post;

@@ -37,7 +37,10 @@ class PostsRepository
      */
     public function filterByAuthor(Relation|Builder $builder, string $author): Relation|Builder
     {
-        $join = $builder->leftJoin('users', 'posts.user_id', '=', 'users.id');
+        $join = $builder
+            ->select(['posts.*'])
+            ->leftJoin('users', 'posts.user_id', '=', 'users.id');
+
         return $join->where('users.email', $author);
     }
 
@@ -50,7 +53,10 @@ class PostsRepository
      */
     public function filterByCategory(Relation|Builder $builder, string $category): Relation|Builder
     {
-        $join = $builder->leftJoin('categories', 'posts.category_id', '=', 'categories.id');
+        $join = $builder
+            ->select(['posts.*'])
+            ->leftJoin('categories', 'posts.category_id', '=', 'categories.id');
+
         return $join->where('categories.alias', $category);
     }
 }
